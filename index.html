@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>💌</title>
 <style>
+.puzzle-full-image-overlay {
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+    z-index: 20; /* add this line */
+}
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #111; min-height: 100vh; display: flex; justify-content: center; align-items: center; background: #FFDAE9; overflow: auto; padding: 24px; }
 #envelopeStage { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; position: fixed; inset: 0; z-index: 10; }
@@ -291,7 +301,8 @@ function isPuzzleSolved() {
 
 function onPuzzleSolved() {
     puzzleRevealText.classList.add('show');
-    puzzleFullImageOverlay.classList.add('show'); // make full image visible
+    puzzleFullImageOverlay.style.display = 'block'; // ensure overlay isn’t hidden
+    puzzleFullImageOverlay.classList.add('show');   // fade it in
 }
 
 function checkComplete(tiles){
