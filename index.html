@@ -221,13 +221,33 @@ function initPuzzle(){
     for(let i=0;i<9;i++){
         const div = document.createElement('div');
         div.className='puzzle-tile';
-        if(i<8){ div.style.background=`url('images/tile-${i+1}.png')`; div.style.backgroundSize='cover'; }
-        else div.classList.add('empty');
+        if(i<8){ 
+            div.style.background=`url('images/tile-${i+1}.png')`; 
+            div.style.backgroundSize='cover'; 
+        } else {
+            div.classList.add('empty');
+        }
         div.dataset.index=i;
         puzzleGrid.appendChild(div);
         tiles.push(div);
     }
     tiles.forEach(t=>t.addEventListener('click',()=>moveTile(t,tiles)));
+
+    // shuffle
+    let emptyIdx = 8;
+    for(let i=0;i<100;i++){ // 100 random moves
+        const neighbors = [];
+        tiles.forEach((t,j)=>{
+            const dist = Math.abs(j-emptyIdx);
+            if(dist===1 || dist===3) neighbors.push(t);
+        });
+        const moveTile = neighbors[Math.floor(Math.random()*neighbors.length)];
+        [moveTile.dataset.index, tiles[emptyIdx].dataset.index] = [tiles[emptyIdx].dataset.index, moveTile.dataset.index];
+        const tempBg = moveTile.style.background;
+        moveTile.style.background = tiles[emptyIdx].style.background;
+        tiles[emptyIdx].style.background = tempBg;
+        emptyIdx = tiles.findIndex(t=>t.classList.contains('empty'));
+    }
 }
 
 function moveTile(tile,tiles){
