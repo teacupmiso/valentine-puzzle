@@ -221,7 +221,7 @@ function initPuzzle(){
     for(let i=0;i<9;i++){
         const div = document.createElement('div');
         div.className='puzzle-tile';
-        if(i<8){ div.style.background=`url('images/puzzle-${i+1}.png')`; div.style.backgroundSize='cover'; }
+        if(i<8){ div.style.background=`url('images/tile-${i+1}.png')`; div.style.backgroundSize='cover'; }
         else div.classList.add('empty');
         div.dataset.index=i;
         puzzleGrid.appendChild(div);
